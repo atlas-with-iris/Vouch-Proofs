@@ -1,46 +1,41 @@
 # Vouch
 
-**Deterministic action integrity middleware for AI agents.**
-
-Vouch sits between an AI agent's decision and the action it takes, verifying that every proposed action is safe before execution.
-
----
+**Don't trust us. Try us.**
 
 ## The Problem
 
-AI agents are increasingly autonomous — making decisions, writing code, moving data, and taking actions with real consequences. But the governance layer hasn't kept pace. Most safety solutions rely on prompt engineering, LLM-based judges, or human-in-the-loop review.
+AI agents are making decisions with real consequences — writing code, moving data, managing infrastructure, taking actions. The governance layer hasn't kept pace.
 
-These approaches are slow, expensive, non-deterministic, and unauditable.
+Most safety solutions rely on LLM-based judges, prompt engineering, or human-in-the-loop review. These approaches are slow, expensive, non-deterministic, and unauditable.
 
 ## What Vouch Does
 
-Vouch provides **deterministic, multi-signal action analysis** — no LLM required.
+Vouch provides deterministic, sub-millisecond action analysis for AI agents — no LLM required.
 
 - **Sub-millisecond verdicts** on every proposed agent action
 - **Autonomous hardening** — detection improves without human intervention
-- **Cold start to full coverage in under 24 hours**
 - **Zero external dependencies** — no API keys, no GPU, no cloud AI services
 - **Cryptographically auditable** — every decision is signed and replayable
+- **Three detection engines** — deterministic analysis, adaptive learning, and structural zero-day detection working in parallel
 
 ## Validated Performance
 
 | Metric | Value |
 |--------|-------|
-| Plans tested | 1,000,000 |
-| Dangerous actions caught | 100.0000% |
-| Legitimate actions incorrectly blocked | 0.0000% |
-| Throughput | 775 plans/second |
-| Cold start time to full coverage | < 24 hours |
+| Structured traffic catch rate | 99.99% |
+| Mixed traffic catch rate | 99.38% |
+| Adversarial evasion catch rate | 99.59% |
+| Cold start floor (no prior data) | 95.28% on novel attacks |
+| Scale consistency (100K → 500K) | 0.0024% variance |
+| Cost per decision | $0.00 |
 
 Full methodology, conditions, and limitations in [METHODS.md](METHODS.md) and [LIMITATIONS.md](LIMITATIONS.md).
 
 ## Proof Artifacts
 
-| Document | Description |
-|----------|-------------|
-| [METHODS.md](METHODS.md) | Test methodology and conditions |
-| [RESULTS.md](RESULTS.md) | Detailed performance results |
-| [LIMITATIONS.md](LIMITATIONS.md) | Scope, boundaries, and honest limitations |
+- [METHODS.md](METHODS.md) — How we tested, under what conditions
+- [RESULTS.md](RESULTS.md) — What we measured, tier by tier
+- [LIMITATIONS.md](LIMITATIONS.md) — What we can't do yet
 
 ## License
 

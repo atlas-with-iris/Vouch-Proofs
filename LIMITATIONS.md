@@ -6,25 +6,25 @@ Every system has limits. These are ours.
 
 ### Dataset Scope
 
-- **Synthetic data.** All 1,000,000 plans in the validation test were synthetically generated. While designed to mimic real-world variation (typos, inconsistent formatting, ambiguous language), synthetic plans may not capture every pattern seen in production environments.
-- **English-only.** Current validation covers English-language action plans. Performance on other languages has not been formally tested.
-- **General-purpose plans.** The test dataset covers broad agent behaviors. Domain-specific scenarios (financial compliance, healthcare protocols, legal workflows) may require additional configuration.
+- **Synthetic data.** All validation plans were synthetically generated. While designed to mimic real-world variation (typos, inconsistent formatting, ambiguous language, encoding tricks), synthetic plans may not capture every pattern seen in production environments.
+- **English-primary.** Core validation covers English-language action plans. Non-Latin Unicode detection has been tested (95%+ catch on Cyrillic, Japanese, space-injected), but full multilingual coverage is ongoing.
+- **General-purpose plans.** The test datasets cover broad agent behaviors. Domain-specific scenarios (financial compliance, healthcare protocols, legal workflows) may require additional configuration.
 
-### Performance Context
+### Detection
 
-- **Cold start is the floor.** The 100% catch rate was measured after autonomous hardening. Initial cold-start detection begins at approximately 43% and improves autonomously over hours to days.
-- **Throughput varies.** 775 plans/second was measured on a single node with standard hardware. Production throughput will vary based on hardware, concurrent load, and plan complexity.
-- **No system is future-proof.** Detection improves autonomously, but novel attack vectors not represented in any prior data may require updates.
+- **Euphemistic framing is the hardest problem.** Plans that use business-appropriate language to describe harmful actions (e.g., "streamline credential management" meaning "weaken authentication") are the primary source of remaining misses. This is a feature of the problem, not a bug in the system.
+- **Cold start is high but not perfect.** On completely novel attack patterns with zero prior exposure, the system catches 95.28%. The remaining 4.72% are missed due to contextual disambiguation, not vocabulary gaps.
+- **Deterministic trade-off.** Deterministic analysis provides provability and auditability at the cost of generalization. Novel patterns that a probabilistic system might catch speculatively may require updates in a deterministic system.
+
+### Performance
+
+- **Throughput varies.** 400–600 plans/second was measured on a single node with standard hardware. Production throughput will vary based on hardware, concurrent load, and plan complexity.
+- **False positive rate.** Current strict FPR is approximately 6.5%. Plans flagged at this level are not blocked — they receive elevated review. Operational FPR (plans incorrectly hard-blocked) is effectively 0%.
 
 ### Adversarial Robustness
 
-- **Tested against 10 adversarial families.** The system has been validated against 10 distinct categories of adversarial attack. However, adversarial research is ongoing — new evasion techniques are discovered regularly across the industry.
-- **Deterministic trade-off.** Deterministic analysis provides provability and auditability at the cost of generalization. Some novel patterns that a probabilistic system might catch speculatively may require vocabulary updates in a deterministic system.
-
-### Deployment
-
+- **Encoding evasion is largely solved.** Leetspeak, homoglyphs, Base64, space injection — all catch at 97%+. But adversarial research is ongoing. New evasion techniques are discovered regularly across the industry.
 - **Not a replacement for defense in depth.** Vouch is designed as one layer in a security stack. It should complement, not replace, existing security controls, access policies, and monitoring.
-- **Configuration required for production.** While Vouch works out of the box for general-purpose safety, production deployments benefit from domain-specific tuning.
 
 ---
 
